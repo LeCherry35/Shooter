@@ -1,0 +1,74 @@
+.container {
+    background-color: aliceblue;
+    margin: 20px auto;
+    width: 600px;
+    height: 600px;
+    position:relative;
+    overflow: hidden;
+}
+#score {
+    text-align: center;
+}
+.crawler {
+    position: absolute;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    background-color: cadetblue;
+    transition: 15s all;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    
+}
+.arrowButtons {
+    height: 30px;
+    width: 30px;
+    background-color: aquamarine;
+}
+.trash {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+}
+.star {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    transition: 1s all;
+}
+
+.gun {
+    position: absolute;
+    top: 280px;
+    left: 280px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: blueviolet;
+    transition: 5s all linear;
+
+    /* transition: all 15s; */
+}
+.bullet {
+    position: absolute;
+    /* top: 295px; */
+    /* left: 295px; */
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+    transition: all 15s ease-out;
+    /* transition: ; */
+}
+.ship {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    transition: 3s all;
+    background-color: red;
+}
+#particles {
+    background-color: black;
+}
