@@ -37,7 +37,14 @@
     width: 40px;
     transition: 1s all;
 }
-
+.gunny{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    transform: rotateZ(0deg);
+}
 .gun {
     position: absolute;
     top: 280px;
@@ -45,9 +52,9 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: blueviolet;
+    background-image: url('./img/myShip-04.svg');
     transition: 5s all linear;
-
+    
     /* transition: all 15s; */
 }
 .bullet {
@@ -63,11 +70,28 @@
 }
 .ship {
     position: absolute;
+    transition: 3s all;
+    
+    /* background-color: red; */
+    
+}
+.shipRot {
+    background: rgb(137, 137, 137);
+    /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(246,58,1,1) 37%, rgba(0,212,255,1) 100%); */
+    animation:shipRot .5s ease-in alternate infinite;
+    border-radius: 50%;
+    transform-origin: center;
     height: 50px;
     width: 50px;
-    border-radius: 50%;
-    transition: 3s all;
-    background-color: red;
+}
+@keyframes shipRot{
+    from{
+        transform: rotateX(0deg);
+
+    }
+    to{
+        transform: rotateX(30deg);
+    }
 }
 #particles {
     background-color: black;
