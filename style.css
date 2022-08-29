@@ -1,15 +1,72 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Hairline&display=swap'); */
+
 .container {
-    background-color: aliceblue;
+    background-image: url('./img/space2-05.png');
+    background-size: contain;
     margin: 20px auto;
     width: 600px;
     height: 600px;
     position:relative;
     overflow: hidden;
+    z-index: 2;
+    user-select: none;
 }
 #score {
+    padding: 10px;
+    position:relative;
     text-align: center;
+    height: 20px;
+    width: 280px;
+    border-radius: 20px;
+    margin: 0 auto;
+    line-height: 20px;
+    font-family: 'Bungee', cursive;
+    transition: 2s all;
+    z-index: 3;
+    background-color: white;
+    user-select: none;
 }
-.crawler {
+#score span {
+    font-size: larger;
+    color: red
+}
+.menu {
+    position: relative;
+    transition: 1s opacity;
+    padding: 20px;
+    width: 300px;
+    margin: 220px auto;
+    z-index: 3;
+    border-radius: 52px;
+    background-color: black;
+    background-blend-mode: difference;
+    font-family: 'Bungee', cursive;
+    font-size: 64px;
+    line-height: 68px;
+    text-align: center;
+    color: white;
+    opacity: 0;
+}
+.menu:hover {
+    animation: menuBlink 1s infinite alternate;
+    /* transform: scale(120%); */
+}
+.menu:active {
+    box-shadow: 0 0 30px rgb(244, 244, 135);
+    /* background-color: red;
+    transform: scale(90%) */
+}
+@keyframes menuBlink {
+    from {
+        color: white;
+        transform: scale(100%);
+    }
+    to {
+        color: yellow;
+        transform: scale(110%);
+    }
+}
+/* .crawler {
     position: absolute;
     border-radius: 50%;
     height: 60px;
@@ -36,7 +93,7 @@
     height: 40px;
     width: 40px;
     transition: 1s all;
-}
+} */
 .gunny{
     width: 50px;
     height: 50px;
@@ -53,7 +110,8 @@
     height: 40px;
     border-radius: 50%;
     background-image: url('./img/myShip-04.svg');
-    transition: 5s all linear;
+    transition: 4s all ease-out;
+    box-shadow: 0 0 10px rgb(244, 244, 135);
     
     /* transition: all 15s; */
 }
@@ -64,22 +122,23 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: black;
+    box-shadow: 0 0 10px rgb(244, 244, 135);
+    /* background-image: url('./img/star-05.svg') repeat; */
+    background-color: rgb(0, 0, 0);
     transition: all 15s ease-out;
     /* transition: ; */
 }
 .ship {
+    background: rgb(137, 137, 137);
     position: absolute;
-    transition: 3s all;
-    
-    /* background-color: red; */
+    transition: 4s all;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgb(255, 101, 101);
     
 }
 .shipRot {
-    background: rgb(137, 137, 137);
     /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(246,58,1,1) 37%, rgba(0,212,255,1) 100%); */
     animation:shipRot .5s ease-in alternate infinite;
-    border-radius: 50%;
     transform-origin: center;
     height: 50px;
     width: 50px;
@@ -95,4 +154,36 @@
 }
 #particles {
     background-color: black;
+}
+.explosion {
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    z-index: 5;
+    animation: explosion 1s;
+    /* background-image: url('/img/explosion/Untitled-1-05.png'); */
+    background-size: cover;
+}
+.bigEexplosion {
+    position: absolute;
+    height: 120px;
+    width: 120px;
+    z-index: 5;
+    animation: explosion 1s;
+    /* background-image: url('/img/explosion/Untitled-1-05.png'); */
+    background-size: cover;
+}
+@keyframes explosion {
+    0% {background-image: url('./img/explosion/x-01.png');}
+    9% {background-image: url('./img/explosion/x-02.png');}
+    18% {background-image: url('./img/explosion/x-03.png');}
+    27% {background-image: url('./img/explosion/x-04.png');}
+    36% {background-image: url('./img/explosion/x-05.png');}
+    45% {background-image: url('./img/explosion/x-06.png');}
+    54% {background-image: url('./img/explosion/x-07.png');}
+    63% {background-image: url('./img/explosion/x-08.png');}
+    72% {background-image: url('./img/explosion/x-09.png');}
+    81% {background-image: url('./img/explosion/x-10.png');}
+    90% {background-image: url('./img/explosion/x-11.png');}
+    100% {background-image: url('./img/explosion/x-12.png');}
 }
