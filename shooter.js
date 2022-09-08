@@ -171,6 +171,9 @@ function checkHit() {
                 ship.className = 'shot'
                 const body = document.querySelector('body')
                 body.insertAdjacentHTML('afterbegin', `<div class="explosion" style="top:${shipCurrentY}px; left:${shipCurrentX}px"></div>` )
+                setTimeout(() => {
+                    document.querySelector('.explosion').remove()
+                }, 1500)
                 ship.remove()
             }
         }
@@ -183,7 +186,9 @@ function CheckCrash() {
     const {x: containerCurrentX, y: containerCurrentY} = container.getBoundingClientRect()
     
     if((gunCurrentX > containerCurrentX + 600) || (gunCurrentX + 40 < containerCurrentX) || (gunCurrentY > containerCurrentY + 600) || (gunCurrentY + 40 < containerCurrentY)) {
-        gun.remove()
+        gun.style.display = 'none'
+        gun.style.top = '280px'
+        gun.style.left = '280px'
         gameOver = true
         // console.log(score);
         score = 'scored <span>' + String(score) + '</span> and then flew away'
@@ -194,7 +199,6 @@ function CheckCrash() {
         if(gunCurrentX + 25 > shipCurrentX - 5 && gunCurrentX - 5 < shipCurrentX + 35 && gunCurrentY + 25 > shipCurrentY - 5 && gunCurrentY - 5 < shipCurrentY + 35) {
             const body = document.querySelector('body')
             body.insertAdjacentHTML('afterbegin', `<div class="bigEexplosion" style="top:${gunCurrentY}px; left:${gunCurrentX}px"></div>` )
-            // body.insertAdjacentHTML('afterbegin', `<div class="explosion" style="top:${shipCurrentY}px; left:${shipCurrentX}px"></div>` )
             ship.remove()
             gun.style.display = 'none'
             gun.style.top = '280px'
