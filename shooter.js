@@ -1,5 +1,12 @@
 let menu = document.querySelector('.menu')
-menu.addEventListener('click', startGame)
+
+if (!sessionStorage.getItem('tutorialShown')){
+    menu.addEventListener('click', showTutorial)
+} else {
+    menu.addEventListener('click', startGame)
+}
+
+
 menu.style.opacity = 1
 
 let container = document.querySelector('.container')
@@ -12,10 +19,85 @@ let shipFrequency = 4000
 let gameOver = false
 let score = 0
 
+function showTutorial() {
+    
+    gun.style.display = ''
+    menu.removeEventListener('click', showTutorial)
+    menu.style.opacity = '0%'
+    setTimeout(() => {  
+        menu.remove()
+    }, 1000)
+    container.insertAdjacentHTML('afterbegin', '<div class= "tutorial"><div>')
+    const tutorial = document.querySelector('.tutorial')
+    tutorial.style.opacity = 0.5
+    container.insertAdjacentHTML('afterbegin', "<div class= 'tutorial-text'>press w, a, s, d to move, but don't fly away<div>")
+    const tutorialText = document.querySelector('.tutorial-text')
+    document.addEventListener('keydown', move)
+    container.addEventListener('mousemove', gunRot)
+    tutorialText.style.opacity = 1
+    document.addEventListener('keydown', afterMoved)
+    function afterMoved (event) {
+        if (event.code == 'KeyW' || event.code == 'KeyS' || event.code == 'KeyA' || event.code == 'KeyD'){
+            setInterval(() => {
+                if(!gameOver) {
+                    checkHit()
+                    CheckCrash()
+                }
+                // } else {
+                //     tutorial.style.opacity = 0
+                //     tutorialText.style.opacity = 0
+                //     setTimeout(() => {
+                //         tutorialText.remove()
+                //         tutorial.remove()
+                //     }, 1000)
+                // }
+            }, 10)
+            setTimeout(() => {
+                showShootTutorial()
+            }, 2000)
+        }
+    }
+    function showShootTutorial() {
+        document.removeEventListener('keydown', afterMoved)
+        tutorialText.innerHTML = 'use mouse to move and shoot'
+        container.addEventListener('click', shoot)
+        container.addEventListener('click', afterShoot)
+        gun.addEventListener('click', event => event.stopPropagation())
+    }
+    function afterShoot() {
+        container.removeEventListener('click', afterShoot)
+        setTimeout(() => {
+            tutorialText.innerHTML = "shoot everything that moves, but don't get hit"
+        },2000)
+        setTimeout(() => {
+            updateScore()
+            scoreDiv.style.transform = 'translateY(0px) scale(100%)'
+            tutorialText.innerHTML = '3 points for every hit'
+            startAttack()
+        },4000)
+        setTimeout(() => {
+            tutorialText.innerHTML = '-1 for each enemy that flew away'
+        },6000)
+        setTimeout(() => {
+            if(tutorialText.style.opacity === 1) {
+                sessionStorage.setItem('tutorialShown', 'true')
 
+            }
+            tutorial.style.opacity = 0
+            tutorialText.style.opacity = 0
+            setTimeout(() => {
+                tutorialText.remove()
+                tutorial.remove()
+            }, 1000)
+            
+        },8000)
+
+        
+        
+    }
+}
 function startGame() {
     gameOver = false
-    console.log('started')
     gun.style.display = ''
     menu.removeEventListener('click', startGame)
     menu.style.opacity = '0%'
@@ -27,44 +109,40 @@ function startGame() {
     container.addEventListener('click', shoot)
     container.addEventListener('mousemove', gunRot)
     gun.addEventListener('click', event => event.stopPropagation())
-    console.log('added listeners')
     updateScore()
     scoreDiv.style.transform = 'translateY(0px) scale(100%)'
+    startAttack()
+    setInterval(() => {
+        if(!gameOver) {
+            checkHit()
+            CheckCrash()
+        }
+    }, 10)
     
+}
+function startAttack () {
     const shipsAttack = setInterval(() => {
-        console.log('attack');
         if(gameOver) {
             
             clearInterval(shipsAttack)
         }
         const delay = Math.rand * 1000
         setTimeout(() => {
-            console.log('ship app and m')
             shipAppears()
             shipMoves()
         },delay)
         const moreShipsAttack = setInterval(() => {
-            console.log('attackMore');
             if(gameOver) {
                 clearInterval(moreShipsAttack)
             } else {
-                console.log('ship app and m')
                 shipAppears()
                 shipMoves()
             }
         }
         , shipFrequency * Math.PI)
     }, shipFrequency)
-    console.log('?')
-    setInterval(() => {
-        if(!gameOver) {
-            console.log('ch')
-            checkHit()
-            CheckCrash()
-        }
-    }, 10)
+    
 }
-
 
 function move (event) {
     switch (event.code) {
@@ -146,8 +224,6 @@ function shipAppears() {
             }
         }
     }, 3000)
-    // ship.style.left =`100px`
-    // ship.style.top =`100px`
 }
 function shipMoves() {
     const ship = document.querySelector('.ship')
@@ -190,7 +266,6 @@ function CheckCrash() {
         gun.style.top = '280px'
         gun.style.left = '280px'
         gameOver = true
-        // console.log(score);
         score = 'scored <span>' + String(score) + '</span> and then flew away'
         updateScore()
     }
@@ -198,7 +273,7 @@ function CheckCrash() {
         const {x: shipCurrentX, y: shipCurrentY} = ship.getBoundingClientRect()
         if(gunCurrentX + 25 > shipCurrentX - 5 && gunCurrentX - 5 < shipCurrentX + 35 && gunCurrentY + 25 > shipCurrentY - 5 && gunCurrentY - 5 < shipCurrentY + 35) {
             const body = document.querySelector('body')
-            body.insertAdjacentHTML('afterbegin', `<div class="bigEexplosion" style="top:${gunCurrentY}px; left:${gunCurrentX}px"></div>` )
+            body.insertAdjacentHTML('afterbegin', `<div class="bigEexplosion" style="top:${gunCurrentY - 60}px; left:${gunCurrentX - 60}px"></div>` )
             ship.remove()
             gun.style.display = 'none'
             gun.style.top = '280px'
@@ -214,10 +289,24 @@ function CheckCrash() {
         scoreDiv.style.transform = 'translateY(200px) scale(190%)'
         container.insertAdjacentHTML('afterbegin', '<div class="menu">play again!</div>')
         menu = document.querySelector('.menu')
+        if (!sessionStorage.getItem('tutorialShown')) {
+            tutorialText.remove()
+            tutorial.remove()
+        }
+        
         setTimeout(() => {
+            console.log('g')
             menu.addEventListener('click', startGame)
             menu.style.opacity = 1
             score = 0
+            setTimeout(() => {
+                const highestId = window.setTimeout(() => {
+                    for (let i = highestId; i >= 0; i--) {
+                      window.clearInterval(i);
+                    }
+                  }, 0);
+                
+            },2000)
             
         }, 3000) 
     }

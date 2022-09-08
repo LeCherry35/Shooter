@@ -36,7 +36,7 @@
     padding: 20px;
     width: 300px;
     margin: 220px auto;
-    z-index: 3;
+    z-index: 8;
     border-radius: 52px;
     background-color: black;
     background-blend-mode: difference;
@@ -49,12 +49,9 @@
 }
 .menu:hover {
     animation: menuBlink 1s infinite alternate;
-    /* transform: scale(120%); */
 }
 .menu:active {
     box-shadow: 0 0 30px rgb(244, 244, 135);
-    /* background-color: red;
-    transform: scale(90%) */
 }
 @keyframes menuBlink {
     from {
@@ -66,34 +63,7 @@
         transform: scale(110%);
     }
 }
-/* .crawler {
-    position: absolute;
-    border-radius: 50%;
-    height: 60px;
-    width: 60px;
-    background-color: cadetblue;
-    transition: 15s all;
-    display: flex;
-    flex-wrap: wrap;
-    overflow: hidden;
-    
-}
-.arrowButtons {
-    height: 30px;
-    width: 30px;
-    background-color: aquamarine;
-}
-.trash {
-    position: absolute;
-    height: 40px;
-    width: 40px;
-}
-.star {
-    position: absolute;
-    height: 40px;
-    width: 40px;
-    transition: 1s all;
-} */
+
 .gunny{
     width: 50px;
     height: 50px;
@@ -101,6 +71,7 @@
     top: -5px;
     left: -5px;
     transform: rotateZ(0deg);
+    z-index: 7;
 }
 .gun {
     position: absolute;
@@ -112,21 +83,16 @@
     background-image: url('./img/myShip-04.svg');
     transition: 4s all ease-out;
     box-shadow: 0 0 10px rgb(244, 244, 135);
-    
-    /* transition: all 15s; */
+    z-index: 6;
 }
 .bullet {
     position: absolute;
-    /* top: 295px; */
-    /* left: 295px; */
     width: 10px;
     height: 10px;
     border-radius: 50%;
     box-shadow: 0 0 10px rgb(244, 244, 135);
-    /* background-image: url('./img/star-05.svg') repeat; */
     background-color: rgb(0, 0, 0);
     transition: all 15s ease-out;
-    /* transition: ; */
 }
 .ship {
     background: rgb(137, 137, 137);
@@ -137,7 +103,6 @@
     
 }
 .shipRot {
-    /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(246,58,1,1) 37%, rgba(0,212,255,1) 100%); */
     animation:shipRot .5s ease-in alternate infinite;
     transform-origin: center;
     height: 50px;
@@ -161,7 +126,6 @@
     width: 80px;
     z-index: 5;
     animation: explosion 1s;
-    /* background-image: url('/img/explosion/Untitled-1-05.png'); */
     background-size: cover;
 }
 .bigEexplosion {
@@ -170,7 +134,6 @@
     width: 120px;
     z-index: 5;
     animation: explosion 1s;
-    /* background-image: url('/img/explosion/Untitled-1-05.png'); */
     background-size: cover;
 }
 @keyframes explosion {
@@ -186,4 +149,31 @@
     81% {background-image: url('./img/explosion/x-10.png');}
     90% {background-image: url('./img/explosion/x-11.png');}
     100% {background-image: url('./img/explosion/x-12.png');}
+}
+.tutorial {
+    width: 600px;
+    height: 600px;
+    position:absolute;
+    z-index: 3;
+    user-select: none;
+    background-color: white;
+    opacity: 0;
+    transition: 1s all ease-out;
+    /* doesnt work^ */
+}
+.tutorial-text {
+    box-sizing: border-box;
+    width: 600px;
+    font-family: 'Bungee', cursive;
+    text-align: center;
+    color: black;
+    z-index: 5;
+    position: absolute;
+    top: 50px;
+    font-size: 58px;
+    line-height: 60px;
+    padding: 50px;
+    opacity: 0;
+    transition: 1s all ease-out; 
+    /* doesnt work^ */
 }
