@@ -30,7 +30,7 @@ function showTutorial() {
     container.insertAdjacentHTML('afterbegin', '<div class= "tutorial"><div>')
     const tutorial = document.querySelector('.tutorial')
     tutorial.style.opacity = 0.5
-    container.insertAdjacentHTML('afterbegin', "<div class= 'tutorial-text'>press w, a, s, d to move, but don't fly away<div>")
+    container.insertAdjacentHTML('afterbegin', "<div class= 'tutorial-text'>press <span>w</span>, <span>a</span>, <span>s</span>, <span>d</span> to move, but don't fly away<div>")
     const tutorialText = document.querySelector('.tutorial-text')
     document.addEventListener('keydown', move)
     container.addEventListener('mousemove', gunRot)
@@ -42,15 +42,14 @@ function showTutorial() {
                 if(!gameOver) {
                     checkHit()
                     CheckCrash()
+                } else {
+                    tutorial.style.opacity = 0
+                    tutorialText.style.opacity = 0
+                    setTimeout(() => {
+                        tutorialText.remove()
+                        tutorial.remove()
+                    }, 1000)
                 }
-                // } else {
-                //     tutorial.style.opacity = 0
-                //     tutorialText.style.opacity = 0
-                //     setTimeout(() => {
-                //         tutorialText.remove()
-                //         tutorial.remove()
-                //     }, 1000)
-                // }
             }, 10)
             setTimeout(() => {
                 showShootTutorial()
@@ -59,41 +58,56 @@ function showTutorial() {
     }
     function showShootTutorial() {
         document.removeEventListener('keydown', afterMoved)
-        tutorialText.innerHTML = 'use mouse to move and shoot'
+        tutorialText.innerHTML = 'use <span>mouse</span> to aim and shoot'
         container.addEventListener('click', shoot)
         container.addEventListener('click', afterShoot)
         gun.addEventListener('click', event => event.stopPropagation())
     }
     function afterShoot() {
-        container.removeEventListener('click', afterShoot)
-        setTimeout(() => {
-            tutorialText.innerHTML = "shoot everything that moves, but don't get hit"
-        },2000)
-        setTimeout(() => {
-            updateScore()
-            scoreDiv.style.transform = 'translateY(0px) scale(100%)'
-            tutorialText.innerHTML = '3 points for every hit'
-            startAttack()
-        },4000)
-        setTimeout(() => {
-            tutorialText.innerHTML = '-1 for each enemy that flew away'
-        },6000)
-        setTimeout(() => {
-            if(tutorialText.style.opacity === 1) {
-                sessionStorage.setItem('tutorialShown', 'true')
-
-            }
-            tutorial.style.opacity = 0
-            tutorialText.style.opacity = 0
+         showSecondMessage = new Promise ((res,rej) => {
+            container.removeEventListener('click', afterShoot)
             setTimeout(() => {
-                tutorialText.remove()
-                tutorial.remove()
-            }, 1000)
-            
-        },8000)
+                tutorialText.innerHTML = "shoot everything that moves, but <span>don't get hit</span>"
+                res()
+            },2000)
+        })
+        showSecondMessage.then(() => {
+            return new Promise((res, rej) => {
+                setTimeout(() => {
+                    updateScore()
+                    scoreDiv.style.transform = 'translateY(0px) scale(100%)'
+                    tutorialText.innerHTML = '<span>3</span> points for every <span>hit</span>'
+                    startAttack()
+                    res()
+                },2000)
 
-        
-        
+            })
+
+        }).then(() => {
+            return new Promise((res, rej) => {
+                setTimeout(() => {
+                    tutorialText.innerHTML = '<span>-1</span> for each enemy that <span>flew away</span>'
+                    res()
+                },2000)
+
+            })
+
+        }).then(() => {
+            return new Promise((res, rej) => {
+                setTimeout(() => {
+                        if(!gameOver) sessionStorage.setItem('tutorialShown', 'true')
+                    tutorial.style.opacity = 0
+                    tutorialText.style.opacity = 0
+                    setTimeout(() => {
+                        tutorialText.remove()
+                        tutorial.remove()
+                        res()
+                    }, 1000)
+                    
+                },2000)
+
+            })
+        })
     }
 }
 function startGame() {
@@ -275,6 +289,11 @@ function CheckCrash() {
             const body = document.querySelector('body')
             body.insertAdjacentHTML('afterbegin', `<div class="bigEexplosion" style="top:${gunCurrentY - 60}px; left:${gunCurrentX - 60}px"></div>` )
             ship.remove()
+            setTimeout(() => {
+                const bigEexplosion = document.querySelector('.bigExplosion')
+                console.log(bigExplosion);
+                bigEexplosion.remove()
+            }, 1000)
             gun.style.display = 'none'
             gun.style.top = '280px'
             gun.style.left = '280px'
@@ -289,25 +308,19 @@ function CheckCrash() {
         scoreDiv.style.transform = 'translateY(200px) scale(190%)'
         container.insertAdjacentHTML('afterbegin', '<div class="menu">play again!</div>')
         menu = document.querySelector('.menu')
-        if (!sessionStorage.getItem('tutorialShown')) {
-            tutorialText.remove()
-            tutorial.remove()
-        }
+        // if (!sessionStorage.getItem('tutorialShown')) {
+        //     tutorialText.remove()
+        //     tutorial.remove()
+        // }
         
         setTimeout(() => {
-            console.log('g')
-            menu.addEventListener('click', startGame)
+            if (!sessionStorage.getItem('tutorialShown')){
+                menu.addEventListener('click', showTutorial)
+            } else {
+                menu.addEventListener('click', startGame)
+            }
             menu.style.opacity = 1
             score = 0
-            setTimeout(() => {
-                const highestId = window.setTimeout(() => {
-                    for (let i = highestId; i >= 0; i--) {
-                      window.clearInterval(i);
-                    }
-                  }, 0);
-                
-            },2000)
-            
         }, 3000) 
     }
 }
