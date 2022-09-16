@@ -25,6 +25,8 @@
     z-index: 3;
     background-color: white;
     user-select: none;
+    white-space: nowrap;
+    font-size: 15px
 }
 #score span {
     font-size: larger;
@@ -128,7 +130,7 @@
     animation: explosion 1s;
     background-size: cover;
 }
-.bigEexplosion {
+.bigExplosion {
     position: absolute;
     height: 120px;
     width: 120px;
@@ -176,4 +178,8 @@
     opacity: 0;
     transition: 1s all ease-out; 
     /* doesnt work^ */
+}
+
+span {
+    color: red;
 }

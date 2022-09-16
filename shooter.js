@@ -287,11 +287,10 @@ function CheckCrash() {
         const {x: shipCurrentX, y: shipCurrentY} = ship.getBoundingClientRect()
         if(gunCurrentX + 25 > shipCurrentX - 5 && gunCurrentX - 5 < shipCurrentX + 35 && gunCurrentY + 25 > shipCurrentY - 5 && gunCurrentY - 5 < shipCurrentY + 35) {
             const body = document.querySelector('body')
-            body.insertAdjacentHTML('afterbegin', `<div class="bigEexplosion" style="top:${gunCurrentY - 60}px; left:${gunCurrentX - 60}px"></div>` )
+            body.insertAdjacentHTML('afterbegin', `<div class="bigExplosion" style="top:${gunCurrentY - 60}px; left:${gunCurrentX - 60}px"></div>` )
             ship.remove()
             setTimeout(() => {
                 const bigEexplosion = document.querySelector('.bigExplosion')
-                console.log(bigExplosion);
                 bigEexplosion.remove()
             }, 1000)
             gun.style.display = 'none'
