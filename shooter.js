@@ -190,7 +190,6 @@ function CheckCrash() {
         gun.style.top = '280px'
         gun.style.left = '280px'
         gameOver = true
-        // console.log(score);
         score = 'scored <span>' + String(score) + '</span> and then flew away'
         updateScore()
     }
@@ -198,12 +197,16 @@ function CheckCrash() {
         const {x: shipCurrentX, y: shipCurrentY} = ship.getBoundingClientRect()
         if(gunCurrentX + 25 > shipCurrentX - 5 && gunCurrentX - 5 < shipCurrentX + 35 && gunCurrentY + 25 > shipCurrentY - 5 && gunCurrentY - 5 < shipCurrentY + 35) {
             const body = document.querySelector('body')
-            body.insertAdjacentHTML('afterbegin', `<div class="bigEexplosion" style="top:${gunCurrentY}px; left:${gunCurrentX}px"></div>` )
+            body.insertAdjacentHTML('afterbegin', `<div class="bigExplosion" style="top:${gunCurrentY}px; left:${gunCurrentX}px"></div>` )
             ship.remove()
             gun.style.display = 'none'
             gun.style.top = '280px'
             gun.style.left = '280px'
             gameOver = true
+            const bigExplosion = document.querySelector('.bigExplosion')
+            setTimeout(() => {
+                bigExplosion.remove()
+            }, 1500)
             score = 'scored <span>' + String(score) + '</span> and then crashed'
             updateScore()
         }
