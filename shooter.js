@@ -297,6 +297,10 @@ function CheckCrash() {
             gun.style.top = '280px'
             gun.style.left = '280px'
             gameOver = true
+            const bigExplosion = document.querySelector('.bigExplosion')
+            setTimeout(() => {
+                bigExplosion.remove()
+            }, 1500)
             score = 'scored <span>' + String(score) + '</span> and then crashed'
             updateScore()
         }
