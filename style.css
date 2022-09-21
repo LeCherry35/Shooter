@@ -25,8 +25,8 @@
     z-index: 3;
     background-color: white;
     user-select: none;
-    font-size: 15px;
-    word-wrap: none;
+    white-space: nowrap;
+    font-size: 15px
 }
 #score span {
     font-size: larger;
@@ -38,7 +38,7 @@
     padding: 20px;
     width: 300px;
     margin: 220px auto;
-    z-index: 3;
+    z-index: 8;
     border-radius: 52px;
     background-color: black;
     background-blend-mode: difference;
@@ -72,6 +72,7 @@
     top: -5px;
     left: -5px;
     transform: rotateZ(0deg);
+    z-index: 7;
 }
 .gun {
     position: absolute;
@@ -83,6 +84,7 @@
     background-image: url('./img/myShip-04.svg');
     transition: 4s all ease-out;
     box-shadow: 0 0 10px rgb(244, 244, 135);
+    z-index: 6;
 }
 .bullet {
     position: absolute;
@@ -92,7 +94,6 @@
     box-shadow: 0 0 10px rgb(244, 244, 135);
     background-color: rgb(0, 0, 0);
     transition: all 15s ease-out;
-
 }
 .ship {
     background: rgb(137, 137, 137);
@@ -103,7 +104,6 @@
     
 }
 .shipRot {
- 
     animation:shipRot .5s ease-in alternate infinite;
     transform-origin: center;
     height: 50px;
@@ -150,4 +150,35 @@
     81% {background-image: url('./img/explosion/x-10.png');}
     90% {background-image: url('./img/explosion/x-11.png');}
     100% {background-image: url('./img/explosion/x-12.png');}
+}
+.tutorial {
+    width: 600px;
+    height: 600px;
+    position:absolute;
+    z-index: 3;
+    user-select: none;
+    background-color: white;
+    opacity: 0;
+    transition: 1s all ease-out;
+    /* doesnt work^ */
+}
+.tutorial-text {
+    box-sizing: border-box;
+    width: 600px;
+    font-family: 'Bungee', cursive;
+    text-align: center;
+    color: black;
+    z-index: 5;
+    position: absolute;
+    top: 50px;
+    font-size: 58px;
+    line-height: 60px;
+    padding: 50px;
+    opacity: 0;
+    transition: 1s all ease-out; 
+    /* doesnt work^ */
+}
+
+span {
+    color: red;
 }
