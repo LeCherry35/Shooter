@@ -20,6 +20,15 @@ let gameOver = false
 let score = 0
 
 function showTutorial() {
+    //prevent ship from flying away start
+    
+    let preventFlyAwayId = setInterval(() => {
+        if(!gameOver) {
+            preventFlyAway()
+        }
+    }, 10)
+    
+    //prevent ship from flying away end
     
     gun.style.display = ''
     menu.removeEventListener('click', showTutorial)
@@ -95,9 +104,11 @@ function showTutorial() {
         }).then(() => {
             return new Promise((res, rej) => {
                 setTimeout(() => {
-                        if(!gameOver) sessionStorage.setItem('tutorialShown', 'true')
+                    if(!gameOver) sessionStorage.setItem('tutorialShown', 'true')
                     tutorial.style.opacity = 0
                     tutorialText.style.opacity = 0
+                    clearInterval(preventFlyAwayId)
+                    console.log('yo');
                     setTimeout(() => {
                         tutorialText.remove()
                         tutorial.remove()
@@ -325,6 +336,21 @@ function CheckCrash() {
             menu.style.opacity = 1
             score = 0
         }, 3000) 
+    }
+}
+
+function preventFlyAway() {
+    const {x: gunCurrentX, y: gunCurrentY} = gun.getBoundingClientRect()
+    const {x: containerCurrentX, y: containerCurrentY} = container.getBoundingClientRect()
+    
+    if(gunCurrentX > containerCurrentX + 600 - 30) {
+        moveLeft()
+    } else if (gunCurrentX + 40 < containerCurrentX + 30) {
+        moveRight()
+    } else if (gunCurrentY > containerCurrentY + 600 - 30) {
+        moveUp()
+    } else if (gunCurrentY + 40 < containerCurrentY + 30) {
+        moveDown()
     }
 }
 
