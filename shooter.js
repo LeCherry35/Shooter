@@ -39,13 +39,14 @@ function showTutorial() {
     container.insertAdjacentHTML('afterbegin', '<div class= "tutorial"><div>')
     const tutorial = document.querySelector('.tutorial')
     tutorial.style.opacity = 0.5
-    container.insertAdjacentHTML('afterbegin', "<div class= 'tutorial-text'>press <span>w</span>, <span>a</span>, <span>s</span>, <span>d</span> to move, but don't fly away<div>")
+    container.insertAdjacentHTML('afterbegin', "<div class= 'tutorial-text'>press <span>w</span>, <span>a</span>, <span>s</span>, <span>d</span> to move, but <span>don't fly away</span><div><br><sub>*try it</sub>")
     const tutorialText = document.querySelector('.tutorial-text')
     document.addEventListener('keydown', move)
     container.addEventListener('mousemove', gunRot)
     tutorialText.style.opacity = 1
     document.addEventListener('keydown', afterMoved)
     function afterMoved (event) {
+        document.querySelector('sub')?.remove()
         if (event.code == 'KeyW' || event.code == 'KeyS' || event.code == 'KeyA' || event.code == 'KeyD'){
             setInterval(() => {
                 if(!gameOver) {
@@ -67,12 +68,13 @@ function showTutorial() {
     }
     function showShootTutorial() {
         document.removeEventListener('keydown', afterMoved)
-        tutorialText.innerHTML = 'use <span>mouse</span> to aim and shoot'
+        tutorialText.innerHTML = 'use <span>mouse</span> to aim and shoot<br><br><br><br><sub>*try it</sub>'
         container.addEventListener('click', shoot)
         container.addEventListener('click', afterShoot)
         gun.addEventListener('click', event => event.stopPropagation())
     }
     function afterShoot() {
+        document.querySelector('sub')?.remove()
          showSecondMessage = new Promise ((res,rej) => {
             container.removeEventListener('click', afterShoot)
             setTimeout(() => {
@@ -108,7 +110,6 @@ function showTutorial() {
                     tutorial.style.opacity = 0
                     tutorialText.style.opacity = 0
                     clearInterval(preventFlyAwayId)
-                    console.log('yo');
                     setTimeout(() => {
                         tutorialText.remove()
                         tutorial.remove()
@@ -345,12 +346,20 @@ function preventFlyAway() {
     
     if(gunCurrentX > containerCurrentX + 600 - 30) {
         moveLeft()
+        document.querySelector('.tutorial').style.boxShadow = 'inset -100px 0px 100px -3px rgba(255,0,0,1)'
+        setTimeout(()=>document.querySelector('.tutorial').style.boxShadow = 'none', 300) 
     } else if (gunCurrentX + 40 < containerCurrentX + 30) {
         moveRight()
+        document.querySelector('.tutorial').style.boxShadow = 'inset 100px 0px 100px -3px rgba(255,0,0,1)'
+        setTimeout(()=>document.querySelector('.tutorial').style.boxShadow = 'none', 300) 
     } else if (gunCurrentY > containerCurrentY + 600 - 30) {
         moveUp()
+        document.querySelector('.tutorial').style.boxShadow = 'inset 0px -100px 100px -3px rgba(255,0,0,1)'
+        setTimeout(()=>document.querySelector('.tutorial').style.boxShadow = 'none', 300) 
     } else if (gunCurrentY + 40 < containerCurrentY + 30) {
         moveDown()
+        document.querySelector('.tutorial').style.boxShadow = 'inset 0px 100px 100px -3px rgba(255,0,0,1)'
+        setTimeout(()=>document.querySelector('.tutorial').style.boxShadow = 'none', 300) 
     }
 }
 

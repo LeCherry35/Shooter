@@ -28,9 +28,12 @@
     white-space: nowrap;
     font-size: 15px
 }
+span{
+    color: red;
+}
 #score span {
     font-size: larger;
-    color: red
+
 }
 .menu {
     position: relative;
@@ -179,6 +182,12 @@
     /* doesnt work^ */
 }
 
-span {
+.tutorial-text span {
+    text-shadow: 1px 1px 5px black;
+}
+
+.tutorial-text sub {
     color: red;
+    font-size: 20px;
+    text-shadow: 1px 1px 5px black;
 }
